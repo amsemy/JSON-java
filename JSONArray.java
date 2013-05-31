@@ -652,6 +652,18 @@ public class JSONArray {
     }
 
     /**
+     * Put a value in the JSONArray, where the value will be a JSONConvertible.
+     *
+     * @param value
+     *            A JSONConvertible value.
+     * @return this.
+     */
+    public JSONArray put(JSONConvertible value) {
+        this.put(value.toJSONObject());
+        return this;
+    }
+
+    /**
      * Append an object value. This increases the array's length by one.
      *
      * @param value
@@ -769,6 +781,24 @@ public class JSONArray {
      */
     public JSONArray put(int index, Map value) throws JSONException {
         this.put(index, new JSONObject(value));
+        return this;
+    }
+
+    /**
+     * Put a value in the JSONArray, where the value will be a JSONConvertible.
+     *
+     * @param index
+     *            The subscript.
+     * @param value
+     *            The JSONConvertible value.
+     * @return this.
+     * @throws JSONException
+     *             If the index is negative or if the the value is an invalid
+     *             number.
+     */
+    public JSONArray put(int index, JSONConvertible value)
+            throws JSONException {
+        this.put(index, value.toJSONObject());
         return this;
     }
 

@@ -1133,6 +1133,23 @@ public class JSONObject {
     }
 
     /**
+     * Put a key/value pair in the JSONObject, where the value will be a
+     * JSONCovertible.
+     *
+     * @param key
+     *            A key string.
+     * @param value
+     *            A JSONCovertible value.
+     * @return this.
+     * @throws JSONException
+     */
+    public JSONObject put(String key, JSONConvertible value)
+            throws JSONException {
+        this.put(key, value.toJSONObject());
+        return this;
+    }
+    
+    /**
      * Put a key/value pair in the JSONObject. If the value is null, then the
      * key will be removed from the JSONObject if it is present.
      *
@@ -1505,7 +1522,8 @@ public class JSONObject {
 
     /**
      * Wrap an object, if necessary. If the object is null, return the NULL
-     * object. If it is an array or collection, wrap it in a JSONArray. If it is
+     * object. If it is an instance of JSONConvertible, converts it in JSONObject.
+     * If it is an array or collection, wrap it in a JSONArray. If it is
      * a map, wrap it in a JSONObject. If it is a standard property (Double,
      * String, et al) then it is already wrapped. Otherwise, if it comes from
      * one of the java packages, turn it into a string. And if it doesn't, try
@@ -1519,6 +1537,9 @@ public class JSONObject {
         try {
             if (object == null) {
                 return NULL;
+            }
+            if (object instanceof JSONConvertible) {
+                return ((JSONConvertible) object).toJSONObject();
             }
             if (object instanceof JSONObject || object instanceof JSONArray
                     || NULL.equals(object) || object instanceof JSONString
